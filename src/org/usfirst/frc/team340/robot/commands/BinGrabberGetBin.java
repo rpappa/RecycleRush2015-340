@@ -29,7 +29,7 @@ public class BinGrabberGetBin extends CommandBase {
     	}
     	else {
     		System.out.println("[BinGrabberGetBin: execute] lowering  grabber");
-    		binGrabber.lowerGrabber(RobotMap.BinGrabberDownSpeed);
+    		binGrabber.lowerGrabber();
     	}
     }
 
@@ -41,7 +41,7 @@ public class BinGrabberGetBin extends CommandBase {
     // Called once after isFinished returns true
     protected void end() {
     	System.out.println("[BinGrabberGetBin: end] raise grabber");
-    	binGrabber.raiseGrabber(RobotMap.BinGrabberUpSpeed);
+    	binGrabber.raiseGrabber();
     }
 
     // Called when another command which requires one or more of the same

@@ -1,5 +1,7 @@
 package org.usfirst.frc.team340.robot.commands;
 
+import org.usfirst.frc.team340.robot.RobotMap;
+
 /**
  * Manually moves the stacker intake down
  * @author Tai
@@ -14,14 +16,14 @@ public class MO_StackerDown extends CommandBase{
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	stacker.stackerMoveDown(.75);
+    	stacker.stackerMoveDown(RobotMap.StackerDownSpeed);
         System.out.println("[MO_StackerMoveDown: initialize] called :" + stacker.getStackerPosition());
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
         System.out.println("[MO_StackerMoveDown: execute] called :" + stacker.getStackerPosition());
-        
+        System.out.println("Is max: " + stacker.isStackerMax() + "	Is min: " + stacker.isStackerMin());
     }
 
     // Make this return true when this Command no longer needs to run execute()

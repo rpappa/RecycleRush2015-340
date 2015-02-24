@@ -2,13 +2,11 @@ package org.usfirst.frc.team340.robot.commands;
 
 import org.usfirst.frc.team340.robot.RobotMap;
 
-import edu.wpi.first.wpilibj.PIDController.Tolerance;
-
 /**
  * Command to send the stacker arm to a specific position
  * @author Jakob W.
  */
-public class StackerGoToPosition extends CommandBase {
+public class StackerGoToNearestNeutralPosition extends CommandBase {
 
     private int target;
 	private int tolerance;
@@ -18,11 +16,8 @@ public class StackerGoToPosition extends CommandBase {
 	private double percent;
 	private double speed;
 
-	public StackerGoToPosition(int position, int tolerance) {
-        // Use requires() here to declare subsystem dependencies
-        // eg. requires(chassis);
+	public StackerGoToNearestNeutralPosition(int tolerance) {
     	requires(stacker);
-    	this.target = position;
     	this.tolerance = tolerance;
     }
 
@@ -30,6 +25,16 @@ public class StackerGoToPosition extends CommandBase {
     protected void initialize() {
     	currentPos = stacker.getStackerPosition();
     	start = currentPos;
+    	if(currentPos < RobotMap.StackerNeutralTote2Target){
+    		target = RobotMap.StackerNeutralTote1Target;
+    	}else if(currentPos < RobotMap.StackerNeutralTote3Target){
+    		target = RobotMap.StackerNeutralTote2Target;
+    	}else if(currentPos < RobotMap.StackerNeutralTote4Target){
+    		target = RobotMap.StackerNeutralTote3Target;
+    	}else{
+    		target = RobotMap.StackerNeutralTote4Target;
+    	}
+    	
     	initDelta = target - start;
     	percent = 0.1;
     	speed = RobotMap.StackerMaxUpSpeed;
@@ -39,18 +44,10 @@ public class StackerGoToPosition extends CommandBase {
     protected void execute() {
     	currentPos = stacker.getStackerPosition();
     	speed = RobotMap.StackerMaxUpSpeed;
-		/*if (stacker.getStackerPosition() < (position-tolerance)) {
-    		stacker.stackerMoveUp(.75);
-    	}
-    	else if (stacker.getStackerPosition() > (position+tolerance)) {
-    		stacker.stackerMoveDown(.75);
-    	}
-    	else {
-    		stacker.stackerStopVertical();
-    	}*/
+
     	// checks to see if at position
-    	if (((Math.abs(currentPos) <= (Math.abs(target) + tolerance)) 
-    			&& (Math.abs(currentPos) >= Math.abs(target) - tolerance))) {
+    	if ((Math.abs(currentPos) <= (Math.abs(target) + tolerance)) 
+    			&& (Math.abs(currentPos) >= Math.abs(target) - tolerance)) {
     		stacker.stackerStopVertical();
     		speed = 0;
 		}
@@ -67,7 +64,7 @@ public class StackerGoToPosition extends CommandBase {
     	int currDelta = target - currentPos;
     	
     	//if delta is positive then move up
-    	if(currDelta > 0 && !stacker.isStackerMax()){
+    	if(currDelta > 0 && !stacker.isStackerMax() ){
     		stacker.stackerMoveUp(speed);
     	}
     	// if delta is negative move down.
@@ -90,7 +87,7 @@ public class StackerGoToPosition extends CommandBase {
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
         return ((stacker.getStackerPosition() > (target-tolerance)) && (stacker.getStackerPosition() < (target+tolerance))
-        		|| speed==0);
+        		||speed==0);
     }
 
     // Called once after isFinished returns true

@@ -7,7 +7,7 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 
 import org.usfirst.frc.team340.robot.commands.CommandBase;
-
+import edu.wpi.first.wpilibj.CameraServer;
 /**
  * The VM is configured to automatically run this class, and to call the
  * functions corresponding to each mode, as described in the IterativeRobot
@@ -18,6 +18,7 @@ import org.usfirst.frc.team340.robot.commands.CommandBase;
 public class Robot extends IterativeRobot {
 
     Command autonomousCommand;
+    //CameraServer camera;
 
     /**
      * This function is run when the robot is first started up and should be
@@ -29,6 +30,9 @@ public class Robot extends IterativeRobot {
         System.out.println("Default IterativeRobot.robotInit() method... We Are Running!");
         CommandBase.init();
         System.out.println("Command base init good");
+        //camera = CameraServer.getInstance();
+        //camera.setQuality(50);
+        //camera.startAutomaticCapture("cam0");
     }
 	
 	public void disabledPeriodic() {

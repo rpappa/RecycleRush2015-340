@@ -5,6 +5,7 @@ import org.usfirst.frc.team340.robot.OI;
 import org.usfirst.frc.team340.robot.RobotMap;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * The file in which all Subsystems are instantiated for commands, and all commands should extend it. If requiring Subsystems is throwing errors, make sure that your code is extending CommandBase and not just Command.
@@ -33,7 +34,7 @@ public abstract class CommandBase extends Command {
 		fourBar = new FourBarManipulator();
 		levelManager = new LevelManager();
 		noSub = new NoSub();
-		
+		SmartDashboard.putData(binGrabber);
     	// This MUST be here. If the OI creates Commands (which it very likely
         // will), constructing it during the construction of CommandBase (from
         // which commands extend), subsystems are not guaranteed to be

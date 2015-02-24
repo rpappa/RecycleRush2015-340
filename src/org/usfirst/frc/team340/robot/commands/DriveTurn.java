@@ -35,7 +35,7 @@ public class DriveTurn extends CommandBase {
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
     	//XXRJPXX Only works if distance is positive. Should be alright as long as we keep that in mind.
-    	return ((Math.abs(drive.leftEncoderDistance()) >= distance) || (Math.abs(drive.rightEncoderDistance()) >= distance));
+    	return ((Math.abs(drive.getLeftEncoder()) >= distance) || (Math.abs(drive.getRightEncoder()) >= distance));
     }
 
     // Called once after isFinished returns true

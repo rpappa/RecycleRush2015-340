@@ -1,6 +1,5 @@
 package org.usfirst.frc.team340.robot.commands;
 
-import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc.team340.robot.subsystems.LevelManager;
 
 /**

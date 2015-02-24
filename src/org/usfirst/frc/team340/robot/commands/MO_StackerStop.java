@@ -16,6 +16,7 @@ public class MO_StackerStop extends CommandBase {
     protected void initialize() {
     	stacker.stackerStopVertical();
         System.out.println("[MO_StopStacker: initialize] Called :" + stacker.getStackerPosition());
+        System.out.println("Is max: " + stacker.isStackerMax() + "	Is min: " + stacker.isStackerMin());
     }
 
     // Called repeatedly when this Command is scheduled to run

@@ -3,10 +3,10 @@ package org.usfirst.frc.team340.robot.commands;
 import org.usfirst.frc.team340.robot.RobotMap;
 
 /**
- * Command to send the stacker arm to a specific position
- * @author Jakob W.
+ * Command to send the Four Bar arm to a specific position
+ * @author Dayle
  */
-public class StackerGrabTote extends CommandBase {
+public class FourBarGoToLevel extends CommandBase {
 
     private int target;
 	private int tolerance;
@@ -16,68 +16,78 @@ public class StackerGrabTote extends CommandBase {
 	private double percent;
 	private double speed;
 
-	public StackerGrabTote(int tolerance) {
+	public FourBarGoToLevel(int level, int tolerance) {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-    	requires(stacker);
+    	requires(fourBar);
+    	if(level == 1){
+    		this.target = RobotMap.FourBarLevel1Target;
+    	}
+    	else if(level == 2){
+    		this.target = RobotMap.FourBarLevel2Target;
+    	}
+    	else if(level == 3){
+    		this.target = RobotMap.FourBarLevel3Target;
+    	}
+    	else if(level == 4){
+    		this.target = RobotMap.FourBarLevel4Target;
+    	}
+    	else if(level == 5){
+    		this.target = RobotMap.FourBarLevel5Target;
+    	}
+    	else{
+    		this.target = RobotMap.FourBarLevel5Target;
+    	}
+    	this.target = level;
     	this.tolerance = tolerance;
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	currentPos = stacker.getStackerPosition();
-    	start = currentPos;
-    	if(currentPos < RobotMap.StackerGrabTote1Target){
-    		target = RobotMap.StackerGrabTote1Target;
-    	}else if(currentPos < RobotMap.StackerGrabTote2Target){
-    		target = RobotMap.StackerGrabTote2Target;
-    	}else if(currentPos < RobotMap.StackerGrabTote3Target){
-    		target = RobotMap.StackerGrabTote3Target;
-    	}else{
-    		target = RobotMap.StackerGrabTote4Target;
-    	}
-    	
+    	currentPos = fourBar.getPosition();
+    	start = fourBar.getPosition();
     	initDelta = target - start;
     	percent = 0.1;
-    	speed = RobotMap.StackerMaxUpSpeed;
+    	speed = RobotMap.FourBarUpSpeed;
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	currentPos = stacker.getStackerPosition();
-    	speed = RobotMap.StackerMaxUpSpeed;
-    	// checks to see if at position
+    	currentPos = fourBar.getPosition();
+    	speed = RobotMap.FourBarUpSpeed;
+    	
     	if ((Math.abs(currentPos) <= (Math.abs(target) + tolerance)) 
-    			&& (Math.abs(currentPos) >= Math.abs(target) - tolerance)) {
-    		stacker.stackerStopVertical();
+    			&& (Math.abs(currentPos) >= Math.abs(target) - tolerance)
+    			&& (!fourBar.isMin() || !fourBar.isMax())) {
+    		fourBar.stopMovement();
     		speed = 0;
 		}
     	// Checks to see if we are within a percentage from the target position.
-    	else if ((Math.abs(currentPos) >= (Math.abs(target) - (Math.abs(initDelta) * percent)))) {
-    		speed = RobotMap.StackerMaxUpSpeed * 0.5;
+    	else if ((Math.abs(currentPos) >= (Math.abs(target) - (Math.abs(initDelta) * percent)))
+    			&& (!fourBar.isMin() || !fourBar.isMax())) {
+    		speed =10 * 0.5;
     	}
     	// If the stacker is not close to or at the position the stacker moves moves at full speed.
     	else{
-    		speed = RobotMap.StackerMaxUpSpeed;
+    		speed = 10;
     	}
  
     	// current delta.
-    	int currDelta = target - currentPos;
+    	int currDelta = currentPos - target;
     	
     	//if delta is positive then move up
-    	if(currDelta > 0 && !stacker.isStackerMax()){
-    		stacker.stackerMoveUp(speed);
+    	if(currDelta > 0 && speed != 0){
+    		fourBar.moveUp();
     	}
     	// if delta is negative move down.
-    	else if (currDelta < 0 && !stacker.isStackerMin()) {
-			stacker.stackerMoveDown(speed);
+    	else if (currDelta < 0 && speed != 0) {
+    		fourBar.moveDown(true);
 		}
     	// Tells the stacker to stop if it should not move up or down.
     	else{
-    		speed = 0;
-    		stacker.stackerStopVertical();
+    		fourBar.stopMovement();
     	}
-    	System.out.println("[StackerGoToPosition: execute] slowed down before getting to position to stop:"
+    	System.out.println("[FourBarGoToPosition: execute] slowed down before getting to position to stop:"
     			+ " currentPosVal: " + this.currentPos 
     			+ "targetVal: " + this.target 
     			+ "toleranceVal: " + this.tolerance 
@@ -88,17 +98,17 @@ public class StackerGrabTote extends CommandBase {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return ((stacker.getStackerPosition() > (target-tolerance)) && (stacker.getStackerPosition() < (target+tolerance)) || speed==0);
+        return ((fourBar.getPosition() > (target-tolerance)) && (fourBar.getPosition() < (target+tolerance)));
     }
 
     // Called once after isFinished returns true
     protected void end() {
-    	stacker.stackerStopVertical();
+    	fourBar.stopMovement();
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
-    	stacker.stackerStopVertical();
+    	fourBar.stopMovement();
     }
 }

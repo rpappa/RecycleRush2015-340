@@ -1,6 +1,8 @@
 package org.usfirst.frc.team340.robot.subsystems;
 
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.Talon;
 
@@ -11,12 +13,17 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 /**
  * Subsystem which contains all the methods relating to the Bin Grabber mechanism.
  * @author Dayle
+ * @swag 420 Blaze it
  */
+
 public class BinGrabber extends Subsystem {
     Talon moveCim;
 //    Talon moveSim2;
     
     Solenoid openClose;
+    
+    DoubleSolenoid inOut;
+    DoubleSolenoid upDown;
     
     DigitalInput armDown;
     DigitalInput armUp;
@@ -25,18 +32,27 @@ public class BinGrabber extends Subsystem {
 	
 
     public BinGrabber() {
-         moveCim= new Talon(RobotMap.BinGrabberMoveSim1);
-//         moveSim2 = new Talon(RobotMap.BinGrabberMoveSim2);
+         //moveCim= new Talon(RobotMap.BinGrabberMoveCim1);
          openClose = new Solenoid(RobotMap.BinGrabberOpenClose);
+         inOut = new DoubleSolenoid(RobotMap.BinGrabberArmIn, RobotMap.BinGrabberArmOut);
+         upDown = new DoubleSolenoid(RobotMap.BinGrabberLiftUp, RobotMap.BinGrabberLiftDown);
          armDown = new DigitalInput(RobotMap.BinGrabberArmDown);
          armUp = new DigitalInput(RobotMap.BinGrabberArmUp);
     }
-    public void lowerGrabber(double speed) {
-    	moveCim.set(-speed);
+    //kForward = in  && kReverse = out
+    //inOut = long Cylinder && upDown = short Cylinder
+    public void lowerGrabber() {
+    	inOut.set(Value.kReverse);
+    	upDown.set(Value.kForward);
 //    	moveSim2.set(-speed);
     }
-    public void raiseGrabber(double speed) {
-    	moveCim.set(speed);
+    public void midGrabber() {
+    	inOut.set(Value.kForward);
+    	upDown.set(Value.kForward);
+    }
+    public void raiseGrabber() {
+    	inOut.set(Value.kForward);
+    	upDown.set(Value.kReverse);
 //    	moveSim2.set(speed);
     }
     public void expandGrabber() {

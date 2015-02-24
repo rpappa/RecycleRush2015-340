@@ -15,28 +15,22 @@ public class Stacker extends Subsystem {
     
 	//Stacker motors
     Talon verticalStackerMotor;
-//	Talon verticalStackerMotor2 = new Talon(8);
-	//Solenoids
-	Solenoid stackerStackerInOut;
-	//Stacker sensors
+	
+    //Stacker sensors
 	Encoder heightSensor;
 	DigitalInput minimumSensor;
-	DigitalInput toteSensor;
+	
 	//Stacker variables
-	int maxStackerHeight = 360;
+	int maxStackerHeight = RobotMap.StackerMaxHeight;
 	
 	// Put methods for controlling this subsystem
     // here. Call these from Commands.
 	
 	public Stacker() {
 		verticalStackerMotor = new Talon(RobotMap.StackerVertical);
-//		verticalStackerMotor2 = new Talon(8);
-	 	stackerStackerInOut = new Solenoid(RobotMap.StackerInOut);
-		
+
 		heightSensor = new Encoder(RobotMap.StackerHeightEncoder1, RobotMap.StackerHeightEncoder2);
 		minimumSensor = new DigitalInput(RobotMap.StackerMinimumSensor);
-		toteSensor = new DigitalInput(RobotMap.StackerToteSensor);
-		
 		
 	}
 
@@ -45,38 +39,31 @@ public class Stacker extends Subsystem {
         //setDefaultCommand(new MySpecialCommand());
     }
     
-    public void stackerIn() {
-    	
-    }
-    
-    public void stackerOut() {
-    	
-    }
-    
-    public void stackerStopPusher() {
-    	
-    }
-    
-    public boolean isStackerOut() {
-    	return toteSensor.get();
-    }
-    
     public void stackerMoveUp(double speed) {
-    	verticalStackerMotor.set(-speed);
-//    	verticalStackerMotor2.set(-speed);
+    	if(speed < 0){
+    		speed = -speed;
+    	}
+    	/*if (this.isStackerMax()) {
+    		verticalStackerMotor.set(0);
+    	}else{*/
+    		verticalStackerMotor.set(speed);
+    	//}
     }
     
     public void stackerMoveDown(double speed) {
-    	verticalStackerMotor.set(speed);
-//    	verticalStackerMotor2.set(speed);
-    	if (this.isStackerMin()) {
-    		heightSensor.reset();
+    	if(speed < 0){
+    		speed = -speed;
     	}
+    	/*if (this.isStackerMin()) {
+    		heightSensor.reset();
+    		verticalStackerMotor.set(0);
+    	}else{*/
+    		verticalStackerMotor.set(-speed);
+//    	}
     }
     
     public void stackerStopVertical() {
     	verticalStackerMotor.set(0);
-//    	verticalStackerMotor2.set(0);
     }
     
     public int getStackerPosition() {
@@ -95,7 +82,4 @@ public class Stacker extends Subsystem {
     	return false;
     }
     
-    public boolean isToteInHand() {
-    	return toteSensor.get();
-    }
 }

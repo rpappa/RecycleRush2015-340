@@ -21,7 +21,9 @@ public class DriveWithJoysticks extends CommandBase {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	//System.out.println("[DriveWithJoysticks: execute] Driving LeftDriveVal :"+ drive.leftMotorSpeed + ": RightDriveVal :"+ drive.rightMotorSpeed + ":");
+//    	System.out.println("[DriveWithJoysticks: execute] Driving LeftDriveVal :"+ drive.leftMotorSpeed + ": RightDriveVal :"+ drive.rightMotorSpeed + ":");
+//    	System.out.println("[DriveWithJoysticks: execute]"); //dont print here!!!1
+//    	System.out.println("Encoders: " + String.valueOf(drive.getLeftEncoder()) + " , " + String.valueOf(drive.getRightEncoder()));
     	 drive.arcadeDrive(oi.getDriveMove(), oi.getDriveRotate());
     }
 

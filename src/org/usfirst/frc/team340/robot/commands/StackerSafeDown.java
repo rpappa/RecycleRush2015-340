@@ -3,33 +3,32 @@ package org.usfirst.frc.team340.robot.commands;
 import org.usfirst.frc.team340.robot.RobotMap;
 
 /**
- * Command which will send the stacker arm to its maximum position.
- * @author Jakob W.
+ * Manually moves the stacker intake down safely
+ * @author Dayle &Pappa
  */
-public class StackerToMin extends CommandBase {
+public class StackerSafeDown extends CommandBase{
 
-    public StackerToMin() {
+    public StackerSafeDown() {
         // Use requires() here to declare subsystem dependencies
+        // eg. requires(chassis);
     	requires(stacker);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	System.out.println("[StackerToMin: initialize] ");
+        System.out.println("[StackerSafeDown: initialize] called :" + stacker.getStackerPosition());
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	System.out.println("[StackerToMin: execute] encoderVal: "+stacker.getStackerPosition());
-    	if (!stacker.isStackerMin()) {
-    		stacker.stackerMoveDown(RobotMap.StackerDownSpeed/2);
-    		System.out.println("[StackerToMin: execute] Move Stacker Down");
-		}
-    	else {
-    		stacker.stackerStopVertical();
-    		System.out.println("[StackerToMin: execute] Stop, Stacker Has Reached Bottom");
-    		
+    	if(!stacker.isStackerMin()){
+    	    stacker.stackerMoveDown(RobotMap.StackerDownSpeed);
     	}
+        else{
+        	stacker.stackerStopVertical();
+        }
+    	System.out.println("[StackerSafeDown: execute] called :" + stacker.getStackerPosition());
+        System.out.println("Is max: " + stacker.isStackerMax() + "	Is min: " + stacker.isStackerMin());
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -39,16 +38,14 @@ public class StackerToMin extends CommandBase {
 
     // Called once after isFinished returns true
     protected void end() {
-		System.out.println("[StackerToMin: end] Stop Stacker");
-
     	stacker.stackerStopVertical();
+        System.out.println("[StackerSafeDown: end] called");
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
-		System.out.println("[StackerToMin: interrupted] Stop Stacker");
-
     	stacker.stackerStopVertical();
+        System.out.println("[StackerSafeDown: interupted] called");
     }
 }

@@ -9,6 +9,7 @@ public class DriveStraight extends CommandBase {
     private double speed;
 	private double distance;
 
+	// 200 size of robit
 	public DriveStraight(double speed, double distance) {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
@@ -27,14 +28,14 @@ public class DriveStraight extends CommandBase {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	System.out.println("[DriveStraight: execute] driving left and right motors at equal speed");
+    	System.out.println("[DriveStraight: execute] driving left and right motors at equal speed. Encoders " + String.valueOf(drive.getLeftEncoder()) + " , " + String.valueOf(drive.getRightEncoder()));
     	drive.setLeftRightMotorOutputs(speed, speed);
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
     	// XXJPLXX this will not work for going backwards. Lets try to do something like this math.abs(delta) = curr-init; t
-        return ((drive.leftEncoderDistance() >= distance) || (drive.rightEncoderDistance() >= distance));
+        return ((drive.getLeftEncoder() >= distance) || (drive.getRightEncoder() >= distance));
     }
 
     // Called once after isFinished returns true

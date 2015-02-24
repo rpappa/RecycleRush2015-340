@@ -23,6 +23,8 @@ public class FourBarToMax extends CommandBase {
 		if (!fourBar.isMax()) {
 			System.out.println("[FourBarToMax: execute] moving up");
 			fourBar.moveUp();
+		}else{
+			fourBar.stopMovement();
 		}
 	}
 

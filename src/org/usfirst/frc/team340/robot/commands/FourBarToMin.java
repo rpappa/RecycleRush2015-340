@@ -1,7 +1,8 @@
 package org.usfirst.frc.team340.robot.commands;
 
 /**
- *
+ * Command Which will send four bar manipulator to min.
+ *@author Kyle W.
  */
 public class FourBarToMin extends CommandBase {
 
@@ -20,7 +21,9 @@ public class FourBarToMin extends CommandBase {
     protected void execute() {
     	if(!fourBar.isMin()) {
     		System.out.println("[FourBarToMin: execute] Move FourBar Down");
-    		fourBar.moveDown();
+    		fourBar.moveDown(true);
+    	} else {
+    		fourBar.stopMovement();
     	}
     }
 

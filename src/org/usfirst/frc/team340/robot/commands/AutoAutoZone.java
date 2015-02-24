@@ -6,7 +6,6 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
  *
  */
 public class AutoAutoZone extends CommandGroup {
-    
     public  AutoAutoZone() {
         // Add Commands here:
         // e.g. addSequential(new Command1());

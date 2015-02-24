@@ -1,5 +1,7 @@
 package org.usfirst.frc.team340.robot.commands;
 
+import org.usfirst.frc.team340.robot.RobotMap;
+
 /**
  * Manually moves the stacker up
  * @author Tai
@@ -14,13 +16,14 @@ public class MO_StackerUp extends CommandBase {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	stacker.stackerMoveUp(.75);
+    	stacker.stackerMoveUp(RobotMap.StackerUpSpeed);
         System.out.println("[MO_StackerUp: initalize] Called :" + stacker.getStackerPosition());
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
         System.out.println("[MO_StackerUp: execute] Called :" + stacker.getStackerPosition());
+        System.out.println("Is max: " + stacker.isStackerMax() + "	Is min: " + stacker.isStackerMin());
     }
 
     // Make this return true when this Command no longer needs to run execute()

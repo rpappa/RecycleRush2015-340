@@ -5,13 +5,9 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 /**
  *
  */
-public class CGStackOne extends CommandGroup {
+public class AutoBackup extends CommandGroup {
     
-    public  CGStackOne() {
-    	addSequential(new StackerToMin());
-    	//TODO add in how to tell when the bins are in
-    	addSequential(new StackerGrabTote());
-    	addSequential(new StackerLiftTote());
+    public  AutoBackup() {
         // Add Commands here:
         // e.g. addSequential(new Command1());
         //      addSequential(new Command2());
@@ -28,6 +24,13 @@ public class CGStackOne extends CommandGroup {
         // e.g. if Command1 requires chassis, and Command2 requires arm,
         // a CommandGroup containing them would require both the chassis and the
         // arm.
-    	
+    	addParallel(new MO_FourBarClawOpen());
+    	addParallel(new StackerToMin());
+    	addSequential(new FourBarSafeDown(), 2);
+    	addSequential(new DriveStraight(.75,3));
+    	addParallel(new MO_FourBarClawClose());
+    	addSequential(new StackerGrabTote(2));
+    	addSequential(new DriveTurn(.5, .5, 10));
+    	addSequential(new DriveStraight(.5,2.5));
     }
 }

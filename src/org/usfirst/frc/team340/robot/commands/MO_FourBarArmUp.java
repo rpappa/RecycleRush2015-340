@@ -16,13 +16,15 @@ public class MO_FourBarArmUp extends CommandBase {
     // Called just before this Command runs the first time
     protected void initialize() {
     	fourBar.moveUp();
-    	System.out.println("[MO_FourBarArmUp: initalize] Moved FourBar Up");
+//    	System.out.println("[MO_FourBarArmUp: initalize] Moved FourBar Up");
+    	System.out.println("[MO_FourBarArmUp: execute] Current position: " + fourBar.getPosition() + "    Is min: " + fourBar.isMin() + "    Is max: " + fourBar.isMax());
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	fourBar.moveUp();
-    	System.out.println("[MO_FourBarArmUp: execute] Moved FourBar Up");
+//    	System.out.println("[MO_FourBarArmUp: execute] Moved FourBar Up");
+    	System.out.println("[MO_FourBarArmUp: execute] Current position: " + fourBar.getPosition() + "    Is min: " + fourBar.isMin() + "    Is max: " + fourBar.isMax());
     }
 
     // Make this return true when this Command no longer needs to run execute()

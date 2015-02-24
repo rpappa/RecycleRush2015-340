@@ -1,5 +1,7 @@
 package org.usfirst.frc.team340.robot.commands;
 
+import org.usfirst.frc.team340.robot.RobotMap;
+
 /**
  * Command which will send the stacker arm to its maximum position.
  * @author Jakob W.
@@ -19,9 +21,9 @@ public class StackerToMax extends CommandBase {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	System.out.println("[StackerToMax: execute] encoderVal "+stacker.getStackerPosition());
+    	System.out.println("[StackerToMax: execute] encoderVal: "+stacker.getStackerPosition());
     	if (!stacker.isStackerMax()) {
-    		stacker.stackerMoveUp(1.0);
+    		stacker.stackerMoveUp(RobotMap.StackerMaxUpSpeed);
     		System.out.println("[StackerToMax: execute] moving up");
     	}
     	else {

@@ -1,12 +1,14 @@
 package org.usfirst.frc.team340.robot.commands;
 
-/**
- * Command to move the Stacker mechanism all the way to maximum vertical distance, if a tote is in its control.
- * @author Jakob W.
- */
-public class StackerLiftTote extends CommandBase {
+import org.usfirst.frc.team340.robot.RobotMap;
 
-    public StackerLiftTote() {
+/**
+ * Manually moves the stacker up safely
+ * @author Dayle && Pappa
+ */
+public class StackerSafeUp extends CommandBase {
+
+    public StackerSafeUp() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     	requires(stacker);
@@ -14,20 +16,19 @@ public class StackerLiftTote extends CommandBase {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	System.out.println("[StackerLiftTote: initialize] ");
+        System.out.println("[StackerSafeUp: initalize] Called :" + stacker.getStackerPosition());
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	System.out.println("[StackerLiftTote: execute] moves up if we have a tote and were not at max");
-    	if (stacker.isToteInHand() && !stacker.isStackerMax()) {
-    		System.out.println("[StackerLiftTote: execute] moves up");
-    		stacker.stackerMoveUp(1.0);
+    	if(!stacker.isStackerMax()){
+    		stacker.stackerMoveUp(RobotMap.StackerUpSpeed);
     	}
     	else {
-    		System.out.println("[StackerLiftTote: execute] stop moving");
-    		stacker.stackerStopVertical();
-    	}
+			stacker.stackerStopVertical();
+		}
+        System.out.println("[StackerSafeUp: execute] Called :" + stacker.getStackerPosition());
+        System.out.println("Is max: " + stacker.isStackerMax() + "	Is min: " + stacker.isStackerMin());
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -37,14 +38,14 @@ public class StackerLiftTote extends CommandBase {
 
     // Called once after isFinished returns true
     protected void end() {
-    	System.out.println("[StackerLiftTote: end] stop moving");
     	stacker.stackerStopVertical();
+        System.out.println("[StackerSafeUp: end] called");
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
-    	System.out.println("[StackerLiftTote: interrupted] stop moving");
     	stacker.stackerStopVertical();
+        System.out.println("[MO_StackerUp: interrupted] called");
     }
 }
