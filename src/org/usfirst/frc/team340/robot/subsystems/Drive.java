@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.Encoder;
 
 import org.usfirst.frc.team340.robot.commands.DriveWithJoysticks;
+//import org.usfirst.frc.team340.robot.commands.DriveEncoders;
 import org.usfirst.frc.team340.robot.RobotMap;
 
 /**
@@ -25,11 +26,11 @@ public class Drive extends Subsystem {
     
 	// Drive motors
 	private Talon leftDriveA;
-//	private Talon leftDriveB;
 	private Talon rightDriveA;
-//	private Talon rightDriveB;
 	
 	// Encoders on motors
+	@SuppressWarnings("unused")
+	private int i;
 	private Encoder leftDriveEncoder;
 	private Encoder rightDriveEncoder;
 	
@@ -48,6 +49,7 @@ public class Drive extends Subsystem {
 	private final double KP_RIGHT = 1;
 	private final double KI_RIGHT = 0;
 	private final double KD_RIGHT = 0;
+	
 	private double fixOutput(double output, boolean right) {
 		double deadBand;
 		if(right) {
@@ -88,9 +90,7 @@ public class Drive extends Subsystem {
 	// Constructing the inputs and motors
 	public Drive() {
 		leftDriveA = new Talon(RobotMap.DriveLeftA);
-//		leftDriveB = new Talon(RobotMap.DriveLeftB);
 		rightDriveA = new Talon(RobotMap.DriveRightA);
-//		rightDriveB = new Talon(RobotMap.DriveRightB);
 		
 		leftDriveEncoder = new Encoder(RobotMap.DriveLeftEncoder1,RobotMap.DriveLeftEncoder2);
 		rightDriveEncoder = new Encoder(RobotMap.DriveRightEncoder1,RobotMap.DriveRightEncoder2);
@@ -135,7 +135,6 @@ public class Drive extends Subsystem {
     		speed = -1;
     	}
     	leftDriveA.set(speed);
-//    	leftDriveB.set(speed);
     }
     
     public void setRightDrive(double speed) {
@@ -145,7 +144,6 @@ public class Drive extends Subsystem {
     		speed = -1;
     	}
     	rightDriveA.set(speed);
-//    	rightDriveB.set(speed);
     }
     /**
      * Sets the motors all at once!

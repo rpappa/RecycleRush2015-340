@@ -2,7 +2,7 @@ package org.usfirst.frc.team340.robot.commands;
 
 import org.usfirst.frc.team340.robot.RobotMap;
 
-import edu.wpi.first.wpilibj.PIDController.Tolerance;
+//import edu.wpi.first.wpilibj.PIDController.Tolerance;
 
 /**
  * Command to send the stacker arm to a specific position
@@ -79,12 +79,13 @@ public class StackerGoToPosition extends CommandBase {
     		stacker.stackerStopVertical();
     	}
     	System.out.println("[StackerGoToPosition: execute] slowed down before getting to position to stop:"
-    			+ " currentPosVal: " + this.currentPos 
-    			+ "targetVal: " + this.target 
-    			+ "toleranceVal: " + this.tolerance 
-    			+ "initDeltaVal: " + this.initDelta 
-    			+ "percentVal: " + this.percent
-    			+ "currDeltaVal: " + currDelta);
+    			+ " isStackerMin:" + stacker.isStackerMin()
+    			+ " currentPosVal:" + this.currentPos 
+    			+ " targetVal:" + this.target 
+    			+ " toleranceVal:" + this.tolerance 
+    			+ " initDeltaVal:" + this.initDelta 
+    			+ " percentVal:" + this.percent
+    			+ " currDeltaVal:" + currDelta);
     }
 
     // Make this return true when this Command no longer needs to run execute()

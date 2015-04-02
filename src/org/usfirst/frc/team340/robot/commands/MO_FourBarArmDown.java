@@ -1,8 +1,6 @@
 package org.usfirst.frc.team340.robot.commands;
 
-import org.usfirst.frc.team340.robot.subsystems.FourBarManipulator;
-
-import edu.wpi.first.wpilibj.command.Command;
+//import org.usfirst.frc.team340.robot.subsystems.FourBarManipulator;
 
 /**
  *
@@ -25,7 +23,10 @@ public class MO_FourBarArmDown extends CommandBase {
     protected void execute() {
     	fourBar.moveDown(false);
 //    	System.out.println("[MO_FourBarArmDown: execute] Move FourBar Down");
-    	System.out.println("[MO_FourBarArmDown: execute] Current position: " + fourBar.getPosition() + "    Is min: " + fourBar.isMin() + "    Is max: " + fourBar.isMax());
+    	System.out.println("[MO_FourBarArmDown: execute] Current position Left: " + fourBar.getPositionLeft() +
+  			"Current position Right: " + fourBar.getPositionRight() + 
+  			"    Is min: " + fourBar.isMin() + 
+  			"    Is max: " + fourBar.isMax());
     }
 
     // Make this return true when this Command no longer needs to run execute()

@@ -22,19 +22,12 @@ public class FourBarGrabBin extends CommandBase {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	System.out.println("[FourBarGrabBin: execute]");
-    	/*if (!fourBar.isMin()) {
-    		fourBar.moveDown(true);
-    	}
-    	else{
-    		fourBar.stopMovement();
-    	}
-    	*/
     	
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return /*fourBar.isMin() &&*/ fourBar.isClawClosedOnBin();
+        return fourBar.isClawClosedOnBin();
         
     }
 

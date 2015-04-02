@@ -1,8 +1,7 @@
 package org.usfirst.frc.team340.robot.commands;
 
-import org.usfirst.frc.team340.robot.subsystems.FourBarManipulator;
+import org.usfirst.frc.team340.robot.RobotMap;
 
-import edu.wpi.first.wpilibj.command.Command;
 
 /**
  *
@@ -22,22 +21,38 @@ public class FourBarSafeDown extends CommandBase {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	if(!fourBar.isMin()){
-    		fourBar.moveDown(true);
+    	if(fourBar.isFailedTest()){
+        	oi.coDriverRumbleOn();
+    	}
+    	if(!fourBar.isLeftDown()){
+    		fourBar.driveLeftMotor(RobotMap.FourBarDownSpeed);
     	} else {
+    		fourBar.driveLeftMotor(0);
+    	}
+    	if(!fourBar.isRightDown()) {
+    		fourBar.driveRightMotor(RobotMap.FourBarDownSpeed);
+    	} else {
+    		fourBar.driveRightMotor(0);
+    	}
+    	if (fourBar.isRightDown() && fourBar.isLeftDown()){
     		fourBar.stopMovement();
     	}
-  	System.out.println("[FourBarSafeDown: execute] Current position: " + fourBar.getPosition() + "    Is min: " + fourBar.isMin() + "    Is max: " + fourBar.isMax());
+    	System.out.println("FourBar position: " + fourBar.getPosition());
+    	/*System.out.println("[FourBarSafeDown: execute] Current position Left: " + fourBar.getPositionLeft() +
+  			"Current position Right: " + fourBar.getPositionRight() + 
+  			"    Is min: " + fourBar.isMin() + 
+  			"    Is max: " + fourBar.isMax());*/
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return fourBar.isMin();
+        return fourBar.isLeftDown()&&fourBar.isRightDown();
     }
 
     // Called once after isFinished returns true
     protected void end() {
     	fourBar.stopMovement();
+    	oi.coDriverRumbleOff();
     	System.out.println("[FourBarSafeDown: end] called");
     }
 
@@ -45,6 +60,7 @@ public class FourBarSafeDown extends CommandBase {
     // subsystems is scheduled to run
     protected void interrupted() {
     	fourBar.stopMovement();
+    	oi.coDriverRumbleOff();
     	System.out.println("[FourBarSafeDown: interrupted] called");
     }
 }

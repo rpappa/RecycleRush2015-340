@@ -48,7 +48,11 @@ public class FourBarGoToLevel extends CommandBase {
     	start = fourBar.getPosition();
     	initDelta = target - start;
     	percent = 0.1;
-    	speed = RobotMap.FourBarUpSpeed;
+    	if(initDelta < 0){
+    		speed = RobotMap.FourBarDownSpeed;
+    	}else{
+    		speed = RobotMap.FourBarUpSpeed;
+    	}
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -77,7 +81,7 @@ public class FourBarGoToLevel extends CommandBase {
     	
     	//if delta is positive then move up
     	if(currDelta > 0 && speed != 0){
-    		fourBar.moveUp();
+    		fourBar.moveUp(true);
     	}
     	// if delta is negative move down.
     	else if (currDelta < 0 && speed != 0) {
@@ -98,7 +102,7 @@ public class FourBarGoToLevel extends CommandBase {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return ((fourBar.getPosition() > (target-tolerance)) && (fourBar.getPosition() < (target+tolerance)));
+        return ((fourBar.getPosition() > (target-tolerance)) && (fourBar.getPosition() < (target+tolerance))) || fourBar.isFailedTest();
     }
 
     // Called once after isFinished returns true

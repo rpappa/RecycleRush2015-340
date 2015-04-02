@@ -20,9 +20,12 @@ public class FourBarToMax extends CommandBase {
 
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
+		if(fourBar.isFailedTest()){
+        	oi.coDriverRumbleOn();
+    	}
 		if (!fourBar.isMax()) {
 			System.out.println("[FourBarToMax: execute] moving up");
-			fourBar.moveUp();
+			fourBar.moveUp(true);
 		}else{
 			fourBar.stopMovement();
 		}
@@ -36,6 +39,7 @@ public class FourBarToMax extends CommandBase {
 	// Called once after isFinished returns true
 	protected void end() {
 		System.out.println("[FourBarToMax: end] stop moving");
+    	oi.coDriverRumbleOff();
 		fourBar.stopMovement();
 	}
 
@@ -43,6 +47,7 @@ public class FourBarToMax extends CommandBase {
 	// subsystems is scheduled to run
 	protected void interrupted() {
 		System.out.println("[FourBarToMax: interrupted] stop moving");
+    	oi.coDriverRumbleOff();
 		fourBar.stopMovement();
 	}
 }

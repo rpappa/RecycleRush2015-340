@@ -14,37 +14,10 @@ import edu.wpi.first.wpilibj.command.PrintCommand;
  */
 @SuppressWarnings("unused")
 public class OI {
-	// // CREATING BUTTONS
-	// One type of button is a joystick button which is any button on a
-	// joystick.
-	// You create one by telling it which joystick it's on and which button
-	// number it is.
-	// Joystick stick = new Joystick(port);
-	// Button button = new JoystickButton(stick, buttonNumber);
 
-	// There are a few additional built in buttons you can use. Additionally,
-	// by subclassing Button you can create custom triggers and bind those to
-	// commands the same as any other Button.
-
-	// // TRIGGERING COMMANDS WITH BUTTONS
-	// Once you have a button, it's trivial to bind it to a button in one of
-	// three ways:
-
-	// Start the command when the button is pressed and let it run the command
-	// until it is finished as determined by it's isFinished method.
-	// button.whenPressed(new ExampleCommand());
-
-	// Run the command while the button is being held down and interrupt it once
-	// the button is released.
-	// button.whileHeld(new ExampleCommand());
-
-	// Start the command when the button is released and let it run the command
-	// until it is finished as determined by it's isFinished method.
-	// button.whenReleased(new ExampleCommand());
-
-	// Init controller 1
+	// Init and construct controller 1 Driver -----------------------------------------------
 	Joystick xBoxDriverController1 = new Joystick(0);
-	// Init controller buttons
+	// Init and construct controller buttons
 	Button buttonA1 = new JoystickButton(xBoxDriverController1, 1);
 	Button buttonB1 = new JoystickButton(xBoxDriverController1, 2);
 	Button buttonX1 = new JoystickButton(xBoxDriverController1, 3);
@@ -54,29 +27,26 @@ public class OI {
 	Button buttonBack1 = new JoystickButton(xBoxDriverController1, 7);
 	Button buttonStart1 = new JoystickButton(xBoxDriverController1, 8);
 	Button buttonLeftStick1 = new JoystickButton(xBoxDriverController1, 9);
-
-	// Get values for driving and rotating
-	public double getDriveMove() {
-		// xBoxDriverController1.setRumble(RumbleType.kLeftRumble, 1);
-		if(Math.abs(xBoxDriverController1.getRawAxis(1)) >.1 || Math.abs(xBoxDriverController1.getRawAxis(0)) >.1) {
-			return -xBoxDriverController1.getRawAxis(1);
-		}
-		return -xBoxDriverController1.getRawAxis(5)*(.70);
+	
+	////ButtonA1 Toggle////
+	public boolean buttonA1Pressed = false;
+	
+	public class ButtonA1First extends Button{
+		public boolean get(){return buttonA1.get() && !buttonA1Pressed;}
+	};
+	ButtonA1First buttonA1F= new ButtonA1First();
+	
+	public class ButtonA1Second extends Button{
+		public boolean get(){return buttonA1.get() && buttonA1Pressed;}
 	}
+	ButtonA1Second buttonA1S= new ButtonA1Second();
 
-	public double getDriveRotate() {
-		if(Math.abs(xBoxDriverController1.getRawAxis(0)) >.1 || Math.abs(xBoxDriverController1.getRawAxis(1)) >.1) {
-			return -xBoxDriverController1.getRawAxis(0);
-		}
-		return -xBoxDriverController1.getRawAxis(4)*(.70);
-	}
-
+	//Turn Driver triggers to buttons
 	public class RightTrig1 extends Button {
 		public boolean get() {
 			return xBoxDriverController1.getRawAxis(3) > .5;
 		}
 	}
-
 	RightTrig1 rightTrig1 = new RightTrig1();
 
 	public class LeftTrig1 extends Button {
@@ -84,18 +54,16 @@ public class OI {
 			return xBoxDriverController1.getRawAxis(2) > .5;
 		}
 	}
-
 	LeftTrig1 leftTrig1 = new LeftTrig1();
 
+	//Turn Dpad directions to buttons for driver
 	public class DriverUpDPad extends Button {
 		public boolean get() {
-			// System.out.println(xBoxCoDriverController1.getPOV());
 			return xBoxDriverController1.getPOV() >= 315
-					|| (xBoxDriverController1.getPOV() > -1 && xBoxDriverController1
-							.getPOV() <= 45);
+					|| (xBoxDriverController1.getPOV() > -1 && 
+							xBoxDriverController1.getPOV() <= 45);
 		}
 	}
-
 	Button driverUpDPad = new DriverUpDPad();
 
 	public class DriverDownDPad extends Button {
@@ -104,11 +72,11 @@ public class OI {
 					&& xBoxDriverController1.getPOV() < 270;
 		}
 	}
-
 	Button driverDownDPad = new DriverDownDPad();
-	// Init controller 2
+	
+	// Init  and construct controller 2 Codriver -----------------------------------------------------
 	Joystick xBoxCoDriverController1 = new Joystick(1);
-	// Init Controller buttons
+	// Init and construct Controller buttons
 	Button buttonA2 = new JoystickButton(xBoxCoDriverController1, 1);
 	Button buttonB2 = new JoystickButton(xBoxCoDriverController1, 2);
 	Button buttonX2 = new JoystickButton(xBoxCoDriverController1, 3);
@@ -118,12 +86,12 @@ public class OI {
 	Button buttonBack2 = new JoystickButton(xBoxCoDriverController1, 7);
 	Button buttonStart2 = new JoystickButton(xBoxCoDriverController1, 8);
 
+	//Turn codriver triggers to buttons
 	public class RightTrig2 extends Button {
 		public boolean get() {
 			return xBoxCoDriverController1.getRawAxis(3) > .5;
 		}
 	}
-
 	RightTrig2 rightTrig2 = new RightTrig2();
 
 	public class LeftTrig2 extends Button {
@@ -131,34 +99,29 @@ public class OI {
 			return xBoxCoDriverController1.getRawAxis(2) > .5;
 		}
 	}
-
+	LeftTrig2 leftTrig2 = new LeftTrig2();
+	
+	//Turn Dpad directions to buttons for codriver
 	public class CoDriverUpDPad extends Button {
 		public boolean get() {
-			// System.out.println(xBoxCoDriverController1.getPOV());
 			return xBoxCoDriverController1.getPOV() >= 315
 					|| (xBoxCoDriverController1.getPOV() > -1 && xBoxCoDriverController1
 							.getPOV() <= 45);
 		}
 	}
-
 	Button coDriverUpDPad = new CoDriverUpDPad();
 
-	// no obama w/o bam !
 	public class CoDriverDownDPad extends Button {
 		public boolean get() {
 			return xBoxCoDriverController1.getPOV() > 90
 					&& xBoxCoDriverController1.getPOV() < 270;
 		}
 	}
-
 	Button coDriverDownDPad = new CoDriverDownDPad();
 
-	LeftTrig2 leftTrig2 = new LeftTrig2();
+	
+	//Manual override board construction and button creation------------------------------------------------
 	Joystick manualOveride = new Joystick(2);
-	Button binGrabberContract = new JoystickButton(manualOveride,
-			RobotMap.binGrabberContractPort);
-	Button binGrabberExpand = new JoystickButton(manualOveride,
-			RobotMap.binGrabberExpandPort);
 	Button binGrabberLower = new JoystickButton(manualOveride,
 			RobotMap.binGrabberLowerPort);
 	Button binGrabberRaise = new JoystickButton(manualOveride,
@@ -175,8 +138,9 @@ public class OI {
 			RobotMap.stackerDownPort);
 	Button stackerUp = new JoystickButton(manualOveride, RobotMap.stackerUpPort);
 
-	// Button button8 = new JoystickButton(manualOveride, 8);
-	// Button button8 = new JoystickButton(manualOveride, 8);
+	/*
+	 * Constructor for OI, contains connection of buttons to commands 
+	 */
 	public OI() {
 
 		// ////////////
@@ -185,9 +149,11 @@ public class OI {
 
 		// ////////Competition//////////
 		
-		buttonA1.whenPressed(new CGLoadTote());
-	    buttonB1.whenPressed(new CGSecureBottomTote());
-	    buttonY1.whenPressed(new DriveEncoders());
+		buttonA1F.whenPressed(new StackerGoToPosition(RobotMap.StackerNeutralTote2Target, 2));
+		buttonA1F.whenReleased(new ChangeButtonA1(true));
+		buttonA1S.whenPressed(new StackerToMax());
+		buttonA1S.whenReleased(new ChangeButtonA1(false));
+		buttonB1.whenPressed(new CGSecureBottomTote());
 		buttonStart1.whenPressed(new CGPrepToteStack());
 		
 		rightTrig1.whenPressed(new CGScoreTote());
@@ -198,15 +164,19 @@ public class OI {
 		driverDownDPad.whenPressed(new StackerSafeDown());
 		driverDownDPad.whenReleased(new MO_StackerStop());
 		//driverDownDPad.whenReleased(new PrintCommand("Stacker Down Released"));
+		 
 		// ////////Testing//////////
-
-		/*
-		 * buttonA1.whenPressed(new StackerToMax()); buttonB1.whenPressed(new
-		 * StackerToMin()); buttonY1.whenPressed(new MO_StackerDown());
-		 * buttonY1.whenReleased(new MO_StackerStop()); buttonX1.whenPressed(new
-		 * MO_StackerUp()); buttonX1.whenReleased(new MO_StackerStop());
-		 * buttonStart1.whenPressed(new StackerGoToPosition(100, 10));
-		 */
+//		buttonX1.whenPressed(new DriveStraight(.4,210));
+//		buttonY1.whenPressed(new DriveTurn(0, .75, 85));
+/*
+		buttonA1.whenPressed(new StackerToMax()); 
+		buttonB1.whenPressed(new StackerToMin()); 
+		buttonY1.whenPressed(new MO_StackerDown());
+		buttonY1.whenReleased(new MO_StackerStop());
+		buttonX1.whenPressed(new MO_StackerUp()); 
+		buttonX1.whenReleased(new MO_StackerStop());
+		buttonStart1.whenPressed(new StackerGoToPosition(100, 10));
+*/		 
 /*
 		buttonA1.whenPressed(new StackerToMax());
 		buttonB1.whenPressed(new StackerToMin());
@@ -232,8 +202,9 @@ public class OI {
 		buttonB2.whenPressed(new CGSecureBottomTote());
 		buttonStart2.whenPressed(new CGPrepToteStack());
 		
+		
 		leftTrig2.whenPressed(new MO_FourBarClawOpen());
-		rightTrig2.whenPressed(new FourBarGrabBin());
+		rightTrig2.whenPressed(new MO_FourBarClawClose());
 		
 		coDriverUpDPad.whenPressed(new FourBarSafeUp());
 		coDriverUpDPad.whenReleased(new MO_FourBarArmStop());
@@ -242,23 +213,27 @@ public class OI {
 		coDriverDownDPad.whenReleased(new MO_FourBarArmStop());
 		//coDriverDownDPad.whenReleased(new PrintCommand("Four Bar Down Released"));
 		
-		// ////////Testing//////////
-
-		//rightTrig2.whenPressed(new FourBarGrabBin());
-
+		///////////Testing//////////
+		
+		buttonX2.whenPressed(new BinGrabberGetBin());
+		
+		buttonRB2.whenPressed(new MO_BinGrabberDown());
+		buttonRB2.whenReleased(new MO_BinGrabberStop());
+		buttonLB2.whenPressed(new MO_BinGrabberUp());
+		buttonLB2.whenReleased(new MO_BinGrabberStop());
+		
+		
 		
 
-		// //////////////////
+		/////////////////////
 		// Manual Override //
-		// /////////////////////
+		/////////////////////
 
-		binGrabberContract.whenPressed(new MO_BinGrabberContractGrabber());
-		binGrabberExpand.whenPressed(new MO_BinGrabberExpandGrabber());
-		binGrabberLower.whenPressed(new MO_BinGrabberBot());
-		binGrabberLower.whenReleased(new MO_BinGrabberMid());
-		binGrabberRaise.whenPressed(new MO_BinGrabberTop());
-		binGrabberRaise.whenReleased(new MO_BinGrabberMid());
-
+		binGrabberLower.whenPressed(new MO_BinGrabberDown());
+		binGrabberLower.whenReleased(new MO_BinGrabberStop());
+		binGrabberRaise.whenPressed(new MO_BinGrabberUp());
+		binGrabberRaise.whenReleased(new MO_BinGrabberStop());
+		
 		fourBarArmDown.whenPressed(new MO_FourBarArmDown());
 		fourBarArmDown.whenReleased(new MO_FourBarArmStop());
 		fourBarArmUp.whenPressed(new MO_FourBarArmUp());
@@ -270,5 +245,59 @@ public class OI {
 		stackerUp.whenPressed(new MO_StackerUp());
 		stackerUp.whenReleased(new MO_StackerStop());
 
+	}
+	
+	/*
+	 * Accessor method to return the drive value forward or backward,
+	 *  to be used to get values for the drive
+	 */
+	public double getDriveMove() {
+		if(Math.abs(xBoxDriverController1.getRawAxis(1)) >.15 || Math.abs(xBoxDriverController1.getRawAxis(0)) >.15) {
+			return -xBoxDriverController1.getRawAxis(1);
+		}
+		return -xBoxDriverController1.getRawAxis(5)*(.70);
+	}
+	
+	/*
+	 * Accessor method to return the drive value left or right,
+	 *  to be used to get values for the drive
+	 */
+	public double getDriveRotate() {
+		if(Math.abs(xBoxDriverController1.getRawAxis(0)) >.15 || Math.abs(xBoxDriverController1.getRawAxis(1)) >.15) {
+			return -xBoxDriverController1.getRawAxis(0);
+		}
+		return -xBoxDriverController1.getRawAxis(4)*(.70);
+	}
+	
+	/*
+	 * Method to turn on the rumble for the driver controller
+	 */
+	public void driverRumbleOn(){
+		xBoxDriverController1.setRumble(Joystick.RumbleType.kLeftRumble, 1);
+		xBoxDriverController1.setRumble(Joystick.RumbleType.kRightRumble, 1);
+	}
+
+	/*
+	 * Method to turn off the rumble for the driver controller
+	 */
+	public void driverRumbleOff(){
+		xBoxDriverController1.setRumble(Joystick.RumbleType.kLeftRumble, 0);
+		xBoxDriverController1.setRumble(Joystick.RumbleType.kRightRumble, 0);
+	}
+	
+	/*
+	 * Method to turn on the rumble for the codriver controller
+	 */
+	public void coDriverRumbleOn(){
+		xBoxCoDriverController1.setRumble(Joystick.RumbleType.kLeftRumble, 1);
+		xBoxCoDriverController1.setRumble(Joystick.RumbleType.kRightRumble, 1);
+	}
+	
+	/*
+	 * Method to turn off the rumble for the codriver controller
+	 */
+	public void coDriverRumbleOff(){
+		xBoxCoDriverController1.setRumble(Joystick.RumbleType.kLeftRumble, 0);
+		xBoxCoDriverController1.setRumble(Joystick.RumbleType.kRightRumble, 0);
 	}
 }

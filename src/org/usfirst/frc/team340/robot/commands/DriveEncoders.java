@@ -1,8 +1,8 @@
 package org.usfirst.frc.team340.robot.commands;
 
-import org.usfirst.frc.team340.robot.subsystems.Drive;
+//import org.usfirst.frc.team340.robot.subsystems.Drive;
 
-import edu.wpi.first.wpilibj.command.Command;
+//import edu.wpi.first.wpilibj.command.Command;
 
 /**
  *
@@ -22,11 +22,18 @@ public class DriveEncoders extends CommandBase {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	System.out.println("[DriveEncoders: execute] encoders left: " + String.valueOf(drive.getLeftEncoder()) + ", right: " + String.valueOf(drive.getRightEncoder()));
+    	System.out.println("[DriveEncoders: execute] encoders left: " + String.valueOf(drive.getLeftEncoder()) + ", right: " + String.valueOf(drive.getRightEncoder()));
+    	System.out.println("[DriveEncoders: execute] encoders left: " + String.valueOf(drive.getLeftEncoder()) + ", right: " + String.valueOf(drive.getRightEncoder()));
+    	System.out.println("[DriveEncoders: execute] encoders left: " + String.valueOf(drive.getLeftEncoder()) + ", right: " + String.valueOf(drive.getRightEncoder()));
+    	System.out.println("[DriveEncoders: execute] encoders left: " + String.valueOf(drive.getLeftEncoder()) + ", right: " + String.valueOf(drive.getRightEncoder()));
+    	System.out.println("[DriveEncoders: execute] encoders left: " + String.valueOf(drive.getLeftEncoder()) + ", right: " + String.valueOf(drive.getRightEncoder()));
+    	System.out.println("[DriveEncoders: execute] encoders left: " + String.valueOf(drive.getLeftEncoder()) + ", right: " + String.valueOf(drive.getRightEncoder()));
+    	
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return false;
+        return true;
     }
 
     // Called once after isFinished returns true

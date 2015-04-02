@@ -1,5 +1,7 @@
 package org.usfirst.frc.team340.robot.commands;
 
+import org.usfirst.frc.team340.robot.RobotMap;
+
 /**
  * Command which will have the robot drive straight for a given distance at a given speed.
  * @author Jakob W.
@@ -8,14 +10,16 @@ public class DriveStraight extends CommandBase {
 
     private double speed;
 	private double distance;
+	private double slowDownDistance;
 
-	// 200 size of robit
+	// 200 size of robot
 	public DriveStraight(double speed, double distance) {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     	requires(drive);
     	this.speed = speed;
     	this.distance = distance;
+    	this.slowDownDistance = RobotMap.DriveStraightDistance;
     }
 
     // Called just before this Command runs the first time
@@ -24,11 +28,15 @@ public class DriveStraight extends CommandBase {
     	//why do we reset here?
     	//XXJPLXX lets try to avoid this. Store an intial state and then compare to that. -JPL
     	drive.resetEncoder();
+    	
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	System.out.println("[DriveStraight: execute] driving left and right motors at equal speed. Encoders " + String.valueOf(drive.getLeftEncoder()) + " , " + String.valueOf(drive.getRightEncoder()));
+    	if(Math.abs(distance-drive.getLeftEncoder())<slowDownDistance || Math.abs(distance-drive.getRightEncoder())<slowDownDistance){
+    		drive.setLeftRightMotorOutputs(speed/2, speed/2);
+    	}
     	drive.setLeftRightMotorOutputs(speed, speed);
     }
 

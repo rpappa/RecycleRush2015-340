@@ -25,7 +25,7 @@ public class MO_StackerUp extends CommandBase {
         System.out.println("[MO_StackerUp: execute] Called :" + stacker.getStackerPosition());
         System.out.println("Is max: " + stacker.isStackerMax() + "	Is min: " + stacker.isStackerMin());
     }
-
+    //#James_Was_Here#Hit_Pappa_In_Head
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
         return true;

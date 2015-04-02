@@ -1,6 +1,5 @@
 package org.usfirst.frc.team340.robot.commands;
 
-import edu.wpi.first.wpilibj.command.Command;
 
 /**
  *
@@ -15,17 +14,28 @@ public class FourBarSafeUp extends CommandBase {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	System.out.println("[FourBarSafeUp: execute] Current position: " + fourBar.getPosition() + "    Is min: " + fourBar.isMin() + "    Is max: " + fourBar.isMax());
+//    	System.out.println("[FourBarSafeUp: execute] Current position Left: " + fourBar.getPositionLeft() +
+//  			"Current position Right: " + fourBar.getPositionRight() + 
+//  			"    Is min: " + fourBar.isMin() + 
+//  			"    Is max: " + fourBar.isMax());
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+    	if(fourBar.isFailedTest()){
+        	oi.coDriverRumbleOn();
+    	}
     	if(!fourBar.isMax()){
-    	    fourBar.moveUp();
+    	    fourBar.moveUp(true);
     	} else {
     		fourBar.stopMovement();
     	}
-    	System.out.println("[FourBarSafeUp: execute] Current position: " + fourBar.getPosition() + "    Is min: " + fourBar.isMin() + "    Is max: " + fourBar.isMax());
+    	System.out.println("FourBar position: " + fourBar.getPosition());
+//    	System.out.println("[FourBarSafeUp: execute] Current position Left: " + fourBar.getPositionLeft() +
+//  			"Current position Right: " + fourBar.getPositionRight() + 
+//    			"    Is min: " + fourBar.isMin() + 
+//    			"    Is max: " + fourBar.isMax());
+
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -36,6 +46,7 @@ public class FourBarSafeUp extends CommandBase {
     // Called once after isFinished returns true
     protected void end() {
     	fourBar.stopMovement();
+    	oi.coDriverRumbleOff();
     	System.out.println("[FourBarSafeUp: end] called");
     }
 
@@ -43,6 +54,7 @@ public class FourBarSafeUp extends CommandBase {
     // subsystems is scheduled to run
     protected void interrupted() {
     	fourBar.stopMovement();
-    	System.out.println("[FourBarSafeUp: end] called");
+    	oi.coDriverRumbleOff();
+    	System.out.println("[FourBarSafeUp: interrupted] called");
     }
 }

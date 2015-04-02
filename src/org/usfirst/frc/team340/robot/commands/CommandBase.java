@@ -2,7 +2,6 @@ package org.usfirst.frc.team340.robot.commands;
 
 import org.usfirst.frc.team340.robot.subsystems.*;
 import org.usfirst.frc.team340.robot.OI;
-import org.usfirst.frc.team340.robot.RobotMap;
 
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -22,6 +21,7 @@ public abstract class CommandBase extends Command {
 	public static FourBarManipulator fourBar;
 	public static LevelManager levelManager;
 	public static NoSub noSub;
+	public static BinaryAutoSwitches binaryAutoSwitches;
     
 	public static void init() {
 		System.out.println("Initiating Stacker");
@@ -34,6 +34,7 @@ public abstract class CommandBase extends Command {
 		fourBar = new FourBarManipulator();
 		levelManager = new LevelManager();
 		noSub = new NoSub();
+		binaryAutoSwitches = new BinaryAutoSwitches();
 		SmartDashboard.putData(binGrabber);
     	// This MUST be here. If the OI creates Commands (which it very likely
         // will), constructing it during the construction of CommandBase (from

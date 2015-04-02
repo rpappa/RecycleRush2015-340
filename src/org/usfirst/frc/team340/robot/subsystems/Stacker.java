@@ -1,10 +1,12 @@
+
 package org.usfirst.frc.team340.robot.subsystems;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
-import edu.wpi.first.wpilibj.Solenoid;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.DigitalInput;
+
 import org.usfirst.frc.team340.robot.RobotMap;
 
 /**
@@ -47,6 +49,7 @@ public class Stacker extends Subsystem {
     		verticalStackerMotor.set(0);
     	}else{*/
     		verticalStackerMotor.set(speed);
+    		System.out.println("Stacker Encoder: " + heightSensor.get());
     	//}
     }
     
@@ -55,10 +58,10 @@ public class Stacker extends Subsystem {
     		speed = -speed;
     	}
     	/*if (this.isStackerMin()) {
-    		heightSensor.reset();
     		verticalStackerMotor.set(0);
     	}else{*/
     		verticalStackerMotor.set(-speed);
+    		System.out.println("Stacker Encoder: " + heightSensor.get());
 //    	}
     }
     
@@ -67,14 +70,17 @@ public class Stacker extends Subsystem {
     }
     
     public int getStackerPosition() {
+    	SmartDashboard.putNumber("StackerHeightSensor", heightSensor.get());
     	return heightSensor.get();
     }
     
     public boolean isStackerMax() {
+    	SmartDashboard.putBoolean("isMax",(heightSensor.get() >= maxStackerHeight));
     	return heightSensor.get() >= maxStackerHeight;
     }
     
     public boolean isStackerMin() {
+    	SmartDashboard.putBoolean("StackerMin", minimumSensor.get());
     	if (minimumSensor.get()) {
     		heightSensor.reset();
     		return true;

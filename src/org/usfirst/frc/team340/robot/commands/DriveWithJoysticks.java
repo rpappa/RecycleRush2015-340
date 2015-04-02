@@ -1,6 +1,5 @@
 package org.usfirst.frc.team340.robot.commands;
 
-import org.usfirst.frc.team340.robot.subsystems.Drive;
 
 /**
  * Command which makes the robot move using the primary controller joystick

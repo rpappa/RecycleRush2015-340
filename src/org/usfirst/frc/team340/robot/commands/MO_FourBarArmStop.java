@@ -1,7 +1,5 @@
 package org.usfirst.frc.team340.robot.commands;
 
-import edu.wpi.first.wpilibj.command.Command;
-
 /**
  *
  */
@@ -23,7 +21,10 @@ public class MO_FourBarArmStop extends CommandBase {
     protected void execute() {
     	fourBar.stopMovement();
 //    	System.out.println("[MO_FourBarArmStop: execute] Stopped Robot Arm From Moving");
-    	System.out.println("[MO_FourBarArmStop: execute] Current position: " + fourBar.getPosition() + "    Is min: " + fourBar.isMin() + "    Is max: " + fourBar.isMax());
+    	System.out.println("[MO_FourBarArmStop: execute] Current position Left: " + fourBar.getPositionLeft() +
+  			"Current position Right: " + fourBar.getPositionRight() + 
+  			"    Is min: " + fourBar.isMin() + 
+  			"    Is max: " + fourBar.isMax());
     }
 
     // Make this return true when this Command no longer needs to run execute()

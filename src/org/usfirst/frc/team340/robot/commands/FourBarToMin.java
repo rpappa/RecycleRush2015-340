@@ -19,6 +19,9 @@ public class FourBarToMin extends CommandBase {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+    	if(fourBar.isFailedTest()){
+        	oi.coDriverRumbleOn();
+    	}
     	if(!fourBar.isMin()) {
     		System.out.println("[FourBarToMin: execute] Move FourBar Down");
     		fourBar.moveDown(true);
@@ -35,6 +38,7 @@ public class FourBarToMin extends CommandBase {
     // Called once after isFinished returns true
     protected void end() {
 		System.out.println("[FourBarToMin: end] stop movement of the four bar");
+    	oi.coDriverRumbleOff();
     	fourBar.stopMovement();
     }
 
@@ -42,6 +46,7 @@ public class FourBarToMin extends CommandBase {
     // subsystems is scheduled to run
     protected void interrupted() {
 		System.out.println("[FourBarToMin: interrupted] stop movement of the fourbar");
+    	oi.coDriverRumbleOff();
     	fourBar.stopMovement();
     }
 }
